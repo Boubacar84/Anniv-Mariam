@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compte à Rebours Anniversaire</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to bottom, #ffcccc, #ffe6e6);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background-image: url(../Anniv/image.jpg);
+            background-repeat: no-repeat;
+            background-size: 100%;
+
+        }
+
+        #countdown {
+            font-size: 2rem;
+            margin: 20px auto;
+            color: #ffff;
+            background: #3b3a3a7e;
+            display: block;
+            width: 650px;
+            border-radius: 50px;
+
+        }
+
+        #message {
+            font-size: 1.5rem;
+            color: #d32f2f;
+            display: none;
+        }
+
+        .play-music {
+            margin-top: 20px;
+            display: none;
+        }
+
+        audio {
+            display: none;
+        }
+
+        h1 {
+            background: linear-gradient(to bottom, #ffcccc, #ffe6e6);
+            width: 650px;
+            margin: auto;
+            border-radius: 50px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Anniversaire Mariam</h1>
+    <div id="countdown">Chargement...</div>
+    <div id="message">Joyeux Anniversaire, Mariam BARRY! 🎉🎂</div>
+    <button class="play-music" onclick="playMusic()">▶️ Écouter la musique</button>
+    <audio id="birthdayMusic" src="votre-musique.mp3"></audio>
+
+    <script>
+        // Configuration de la date d'anniversaire
+        const birthday = new Date(new Date().getFullYear(), 11, 25, 0, 0, 0); // 25 décembre de l'année courante
+        if (new Date() > birthday) {
+            birthday.setFullYear(birthday.getFullYear() + 1); // Si la date est passée, on prend l'année suivante
+        }
+
+        // Compte à rebours
+        const countdownElement = document.getElementById('countdown');
+        const messageElement = document.getElementById('message');
+        const musicButton = document.querySelector('.play-music');
+        const birthdayMusic = document.getElementById('birthdayMusic');
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = birthday - now;
+
+            if (diff <= 0) {
+                clearInterval(countdownInterval);
+                countdownElement.style.display = 'none';
+                messageElement.style.display = 'block';
+                musicButton.style.display = 'inline-block';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            countdownElement.textContent = `${days} jours, ${hours} heures, ${minutes} minutes, ${seconds} secondes`;
+        }
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Lecture de la musique
+        function playMusic() {
+            birthdayMusic.play();
+        }
+    </script>
+</body>
+
+</html>
